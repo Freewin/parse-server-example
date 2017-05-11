@@ -20,6 +20,25 @@ var api = new ParseServer({
   liveQuery: {
     classNames: ["Posts", "Comments"] // List of classes to support for query subscriptions
   }
+ 
+	//**** Email Verification ****//
+	/* Enable email verification */
+	verifyUserEmails: true,
+	/* The public URL of your app */
+	// This will appear in the link that is used to verify email addresses and reset passwords.
+	/* Set the mount path as it is in serverURL */
+	publicServerURL: process.env.SERVER_URL || 'http://localhost:1337/parse',
+	/* This will appear in the subject and body of the emails that are sent */
+	appName: process.env.APP_NAME || "grod",
+
+	emailAdapter: {
+		module: 'parse-server-simple-mailgun-adapter',
+		options: {
+			fromAddress: process.env.EMAIL_FROM || "test@example.com",
+			domain: process.env.MAILGUN_DOMAIN || "example.com",
+			apiKey: process.env.MAILGUN_API_KEY  || "key-ee1d325ab68412f00d3bae48b4707e48"
+		}
+	},
 });
 // Client-keys like the javascript key or the .NET key are not necessary with parse-server
 // If you wish you require them, you can set them as options in the initialization above:
